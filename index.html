@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Crypto Pulse – Full Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js for line charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark">
+  <div class="app">
+    <header class="app-header">
+      <div class="title-block">
+        <div class="title-row">
+          <div class="logo-pill">₿</div>
+          <div>
+            <h1>Live Crypto Pulse</h1>
+            <p class="subtitle">
+              Real-time cryptocurrency dashboard powered by the CoinGecko public API.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search by name or symbol..."
+          />
+        </div>
+
+        <div class="toggle-wrapper">
+          <span class="toggle-label">Dark mode</span>
+          <button id="themeToggle" class="toggle-btn" aria-label="Toggle dark mode">
+            🌙
+          </button>
+        </div>
+
+        <div class="refresh-wrapper">
+          <button class="refresh-btn" id="refreshBtn">
+            ⟳ Refresh now
+          </button>
+          <span class="refresh-pill" id="refreshInfo">Auto: 30s</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="details">Coin details</button>
+      <button class="tab" data-tab="about">About</button>
+    </nav>
+
+    <main>
+      <!-- DASHBOARD TAB -->
+      <section class="tab-panel active" id="dashboardTab">
+        <section class="status-bar">
+          <div class="status-left">
+            <span class="status-dot live" id="statusDot"></span>
+            <span id="statusText">Live · Connected to CoinGecko API</span>
+          </div>
+          <div class="status-right">
+            Last updated:
+            <span id="lastUpdated">—</span>
+          </div>
+        </section>
+
+        <section class="summary-grid" id="summaryGrid">
+          <div class="summary-card">
+            <div class="summary-label">Total Market Cap (top 100)</div>
+            <div class="summary-value" id="totalMarketCap">—</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">24h Volume (top 100)</div>
+            <div class="summary-value" id="totalVolume">—</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Biggest Gainer (24h)</div>
+            <div class="summary-value" id="biggestGainer">—</div>
+            <div class="summary-sub" id="biggestGainerChange"></div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-label">Biggest Loser (24h)</div>
+            <div class="summary-value" id="biggestLoser">—</div>
+            <div class="summary-sub" id="biggestLoserChange"></div>
+          </div>
+        </section>
+
+        <section class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort-key="market_cap_rank">#</th>
+                <th data-sort-key="name">Coin</th>
+                <th data-sort-key="current_price">Price (USD)</th>
+                <th data-sort-key="price_change_percentage_24h">24h %</th>
+                <th data-sort-key="market_cap">Market Cap</th>
+                <th data-sort-key="total_volume">24h Volume</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- rows injected by script.js -->
+            </tbody>
+          </table>
+        </section>
+
+        <div class="footer-row">
+          <span id="rowsInfo"></span>
+          <span class="footnote">
+            Data from <a href="https://www.coingecko.com/en/api/documentation" target="_blank">CoinGecko API</a>.
+          </span>
+        </div>
+      </section>
+
+      <!-- DETAILS TAB -->
+      <section class="tab-panel" id="detailsTab">
+        <div class="details-layout">
+          <aside class="details-sidebar">
+            <h2>Selected coin</h2>
+            <div id="selectedCoinBox" class="selected-coin-box empty">
+              <p>Select a coin from the Dashboard table to see more details here.</p>
+            </div>
+          </aside>
+
+          <section class="details-main">
+            <h2>Last 7 days price</h2>
+            <div class="chart-container">
+              <canvas id="coinChart"></canvas>
+            </div>
+            <p class="chart-note" id="chartNote">
+              Tip: click any row in the Dashboard to load a 7-day price chart for that coin.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <!-- ABOUT TAB -->
+      <section class="tab-panel" id="aboutTab">
+        <div class="about-content">
+          <h2>About this project</h2>
+          <p>
+            <strong>Live Crypto Pulse</strong> is a front-end web project that demonstrates how to
+            fetch live data from a public API and display it in an interactive dashboard.
+          </p>
+          <ul>
+            <li>Uses the <code>fetch()</code> API to call the CoinGecko REST endpoints.</li>
+            <li>Auto-refreshes every 30 seconds with a manual refresh option.</li>
+            <li>Includes search, sorting, dark mode, and a multi-tab layout.</li>
+            <li>Displays live summary metrics and a detailed line chart for selected coins.</li>
+          </ul>
+          <p>
+            You can extend this project by adding pagination, more metrics, or support for different
+            fiat currencies (e.g. EUR, JPY).
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
